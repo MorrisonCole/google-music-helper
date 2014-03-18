@@ -3,14 +3,16 @@ Google Music Helper
 A simple collection of scripts to help manage your All Access library.
 
 There are some serious shortcomings since:
+
 1. This was my first time writing Python.
 2. I wrote this in a few hours whilst procrastinating!
 
 I'm happy to accept any pull requests that:
+
 * Fix bugs that have been reported in an issue
 * Add features that have been discussed in an issue
 
-Likewise, if you'd like to see something added just submit an issue
+Likewise, if you'd like to see something added just submit an issue.
 
 Quick start
 ===========
@@ -33,6 +35,6 @@ What does this thing do?
 3. If a result is found, prints the original track list, then the All Access track list
 4. If prompted, deletes the uploaded tracks and adds the All Access ones to your library
 
-# Notes
+##### Notes
 When using this, be careful to compare the original data to the All Access data - sometimes All Access matches cover albums and other unwanted things. Be sure to answer NO! in these cases.
 
