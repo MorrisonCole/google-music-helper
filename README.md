@@ -1,7 +1,7 @@
 Google Music Helper
 ===================
 
-A simple collection of scripts to help manage your All Access library.
+A simple application to help manage your All Access library.
 
 There are some serious shortcomings since:
 
