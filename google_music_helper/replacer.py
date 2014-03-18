@@ -49,7 +49,7 @@ def find_and_replace_uploaded_albums():
             print_album_info(album_id)
 
             question = "Replace with All Access version? (Your original uploaded tracks will be deleted)"
-            replace = yes_no.query_yes_no(question, default="yes")
+            replace = yes_no.query_yes_no(question, default="no")
 
             if replace:
                 print "Replacing with All Access entry:", album_name.decode('utf-8')

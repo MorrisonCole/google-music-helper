@@ -4,7 +4,7 @@ import sys
 
 import replacer
 from google_music_helper.json_utils import save_json_to_file
-from google_music_helper import authentication, locations, choose_function
+from google_music_helper import authentication, locations, choose_function, adder
 
 
 def create_work_directories():
@@ -53,7 +53,8 @@ while True:
         replacer.init()
         replacer.find_and_replace_uploaded_albums()
     elif intended_function == 2:
-        sys.stdout.write("Not yet implemented!\n")
+        adder.init()
+        adder.add_all_tracks_from_existing_artists()
     elif intended_function == 3:
         uploaded_songs = music_manager_api.get_uploaded_songs()
 
@@ -71,32 +72,3 @@ while True:
     elif intended_function == 5:
         sys.stdout.write("Exiting!\n")
         sys.exit(1)
-
-# def add_all_tracks_from_artists():
-#     global artist, artistId, artist_info, album, albumName, albumId, album_info, track, trackName, trackId
-#     for (artist, artistId) in artistList:
-#         print "ARTIST:", artist.decode('utf-8'), "ID:", artistId.decode('utf-8')
-#
-#         if artistId:
-#             try:
-#                 artist_info = mobile_api.get_artist_info(artistId, include_albums=True)
-#             except gmusicapi.exceptions.CallFailure:
-#                 print "Failed to get artist info for ID: ", artistId
-#                 continue
-#
-#             for album in artist_info["albums"]:
-#                 albumName = album["name"].encode('utf-8')
-#                 albumId = album["albumId"].encode('utf-8')
-#
-#                 print "  ALBUM: " + albumName.decode('utf-8')
-#
-#                 album_info = mobile_api.get_album_info(albumId, include_tracks=True)
-#
-#                 for track in album_info["tracks"]:
-#                     trackName = track["title"].encode('utf-8')
-#                     trackId = track["nid"].encode('utf-8')
-#
-#                     print "    TRACK:", trackName.decode('utf-8')
-#                     mobile_api.add_aa_track(trackId)
-#
-#                     # find_and_replace_uploaded_albums()
