@@ -1,7 +1,8 @@
 import logging
-import authentication
+
 import helper
-import yes_no
+from scripts import authentication, yes_no
+
 
 logger = logging.getLogger('google-music-helper')
 
@@ -57,7 +58,7 @@ def find_and_replace_uploaded_albums(uploaded_songs):
 def replace_uploaded_album((album, artist), album_id, uploaded_songs):
     for song in uploaded_songs:
         if (song['album'] == album) and (song['artist'] == artist):
-            song_title = song['title']
+            song_title = song['title'].encode('utf-8')
 
             print "Deleting track:", song_title.decode('utf-8')
 
@@ -86,7 +87,7 @@ def print_uploaded_album_info((album, artist), uploaded_songs):
     tracks = helper.get_tracks_from_uploaded_album((album, artist), uploaded_songs)
     for track in tracks:
         track_number = track['track_number']
-        track_name = track['title']
+        track_name = track['title'].encode('utf-8')
 
         print "    Track %r: %s" % (track_number, track_name.decode('utf-8'))
 
@@ -94,8 +95,8 @@ def print_uploaded_album_info((album, artist), uploaded_songs):
 def print_album_info(album_id):
     album_info = mobile_api.get_album_info(album_id, include_tracks=True)
 
-    album_name = album_info['name']
-    album_artist = album_info['artist']
+    album_name = album_info['name'].encode('utf-8')
+    album_artist = album_info['artist'].encode('utf-8')
 
     print "All Access Album Info:"
     print "  Name:", album_name.decode('utf-8')
@@ -103,6 +104,6 @@ def print_album_info(album_id):
 
     for track in album_info['tracks']:
         track_number = track['trackNumber']
-        track_name = track['title']
+        track_name = track['title'].encode('utf-8')
 
         print "    Track %r: %s" % (track_number, track_name.decode('utf-8'))

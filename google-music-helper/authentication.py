@@ -3,13 +3,13 @@ import sys
 
 from gmusicapi import Mobileclient, Musicmanager, Webclient
 
-import config
+from scripts import config, locations
 
 
 def log_in():
     global username, password
 
-    default_details_file = 'work/authentication_details'
+    default_details_file = locations.WORK_DIRECTORY + 'authentication_details'
 
     if os.path.isfile(default_details_file):
         print "Using log in details from", default_details_file

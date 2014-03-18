@@ -1,10 +1,11 @@
-import json_utils
 import logging
+
+from scripts import json_utils, locations
+
 
 logger = logging.getLogger('google-music-helper')
 
-# TODO: Work directory prefix should not be hard-coded
-default_configuration_file = 'work/config.json'
+default_configuration_file = locations.WORK_DIRECTORY + 'config.json'
 
 
 def get_is_authenticated():

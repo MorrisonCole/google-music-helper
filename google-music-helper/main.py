@@ -2,18 +2,13 @@ import logging
 import os
 import sys
 
-import authentication
-from json_utils import save_json_to_file
+from scripts.json_utils import save_json_to_file
 import replacer
-
-
-work_directory = 'work/'
-log_directory = work_directory + 'logs/'
-output_directory = work_directory + 'output/'
+from scripts import authentication, locations
 
 
 def create_work_directories():
-    work_directories = [work_directory, log_directory, output_directory]
+    work_directories = [locations.WORK_DIRECTORY, locations.LOG_DIRECTORY, locations.OUTPUT_DIRECTORY]
 
     for directory in work_directories:
         if not os.path.exists(directory):
@@ -23,7 +18,7 @@ def create_work_directories():
 def set_up_loggers():
     global logger
 
-    logging.basicConfig(filename=log_directory + 'google-music-helper.log', level=logging.INFO)
+    logging.basicConfig(filename=locations.LOG_DIRECTORY + 'google-music-helper.log', level=logging.INFO)
 
     logger = logging.getLogger('google-music-helper')
     logger.setLevel(logging.INFO)
@@ -47,8 +42,8 @@ music_manager_api = authentication.get_music_manager_api()
 songs = mobile_api.get_all_songs()
 uploaded_songs = music_manager_api.get_uploaded_songs()
 
-save_json_to_file(songs, output_directory + 'all_songs.json')
-save_json_to_file(uploaded_songs, output_directory + 'all_uploaded_songs.json')
+save_json_to_file(songs, locations.OUTPUT_DIRECTORY + 'all_songs.json')
+save_json_to_file(uploaded_songs, locations.OUTPUT_DIRECTORY + 'all_uploaded_songs.json')
 
 replacer.init()
 replacer.find_and_replace_uploaded_albums(uploaded_songs)
