@@ -26,3 +26,18 @@ def get_uploaded_albums(uploaded_songs):
     albums.sort(key=lambda tup: tup[0].lower())
 
     return albums
+
+
+def get_tracks_from_uploaded_album((album, artist), uploaded_songs):
+    tracks = list()
+
+    for song in uploaded_songs:
+        song_artist = song['artist'].encode('utf-8')
+        song_album = song['album'].encode('utf-8')
+
+        if (song_album == album) and (song_artist == artist):
+            tracks.append(song)
+
+    tracks.sort(key=lambda track: track['track_number'])
+
+    return tracks

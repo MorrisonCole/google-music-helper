@@ -24,9 +24,11 @@ def find_and_replace_uploaded_albums(uploaded_songs):
     uploaded_albums = helper.get_uploaded_albums(uploaded_songs)
 
     for (album, artist) in uploaded_albums:
+        print_uploaded_album_info((album, artist), uploaded_songs)
+
         query = album + " " + artist
 
-        logger.log(logging.INFO, 'Searching All Access: %s' % query)
+        logger.log(logging.INFO, 'Searching All Access for: %s' % query)
 
         search_results = mobile_api.search_all_access(query)
         album_hits = search_results.get('album_hits', [''])
@@ -47,7 +49,7 @@ def find_and_replace_uploaded_albums(uploaded_songs):
 
             if replace:
                 print "Replacing with All Access entry:", album_name.decode('utf-8')
-                replace_uploaded_album((album, artist), album_id)
+                replace_uploaded_album((album, artist), album_id, uploaded_songs)
         else:
             print "Could not find All Access entry"
 
@@ -55,6 +57,10 @@ def find_and_replace_uploaded_albums(uploaded_songs):
 def replace_uploaded_album((album, artist), album_id, uploaded_songs):
     for song in uploaded_songs:
         if (song['album'] == album) and (song['artist'] == artist):
+            song_title = song['title']
+
+            print "Deleting track:", song_title.decode('utf-8')
+
             song_id = song['id']
             web_api.delete_songs(song_id)
 
@@ -70,6 +76,19 @@ def add_tracks_from_album(album_id):
 
         print "Adding track:", track_name.decode('utf-8')
         mobile_api.add_aa_track(track_id)
+
+
+def print_uploaded_album_info((album, artist), uploaded_songs):
+    print "Original Album Info:"
+    print "  Name:", album.decode('utf-8')
+    print "  Artist:", artist.decode('utf-8')
+
+    tracks = helper.get_tracks_from_uploaded_album((album, artist), uploaded_songs)
+    for track in tracks:
+        track_number = track['track_number']
+        track_name = track['title']
+
+        print "    Track %r: %s" % (track_number, track_name.decode('utf-8'))
 
 
 def print_album_info(album_id):
