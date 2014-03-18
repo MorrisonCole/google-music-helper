@@ -1,9 +1,9 @@
 import logging
 
-from scripts import json_utils, locations
+from google_music_helper import json_utils, locations
 
 
-logger = logging.getLogger('google-music-helper')
+logger = logging.getLogger('google_music_helper')
 
 default_configuration_file = locations.WORK_DIRECTORY + 'config.json'
 

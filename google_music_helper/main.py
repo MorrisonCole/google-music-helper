@@ -2,9 +2,9 @@ import logging
 import os
 import sys
 
-from scripts.json_utils import save_json_to_file
 import replacer
-from scripts import authentication, locations
+from google_music_helper.json_utils import save_json_to_file
+from google_music_helper import authentication, locations
 
 
 def create_work_directories():
@@ -18,9 +18,9 @@ def create_work_directories():
 def set_up_loggers():
     global logger
 
-    logging.basicConfig(filename=locations.LOG_DIRECTORY + 'google-music-helper.log', level=logging.INFO)
+    logging.basicConfig(filename=locations.LOG_DIRECTORY + 'google_music_helper.log', level=logging.INFO)
 
-    logger = logging.getLogger('google-music-helper')
+    logger = logging.getLogger('google_music_helper')
     logger.setLevel(logging.INFO)
     console_handler = logging.StreamHandler(sys.stdout)
     logger.addHandler(console_handler)

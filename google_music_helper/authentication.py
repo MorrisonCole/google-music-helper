@@ -3,7 +3,7 @@ import sys
 
 from gmusicapi import Mobileclient, Musicmanager, Webclient
 
-from scripts import config, locations
+from google_music_helper import config, locations
 
 
 def log_in():

@@ -1,10 +1,10 @@
 import logging
 
 import helper
-from scripts import authentication, yes_no
+from google_music_helper import authentication, yes_no
 
 
-logger = logging.getLogger('google-music-helper')
+logger = logging.getLogger('google_music_helper')
 
 mobile_api = None
 web_api = None

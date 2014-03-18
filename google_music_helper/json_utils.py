@@ -1,7 +1,7 @@
 import json
 import logging
 
-logger = logging.getLogger('google-music-helper')
+logger = logging.getLogger('google_music_helper')
 
 
 def save_json_to_file(json_data, file_name):
