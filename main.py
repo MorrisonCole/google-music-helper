@@ -4,6 +4,7 @@ import sys
 
 import authentication
 from json_utils import save_json_to_file
+import replacer
 
 
 work_directory = 'work/'
@@ -48,6 +49,9 @@ uploaded_songs = music_manager_api.get_uploaded_songs()
 
 save_json_to_file(songs, output_directory + 'all_songs.json')
 save_json_to_file(uploaded_songs, output_directory + 'all_uploaded_songs.json')
+
+replacer.init()
+replacer.find_and_replace_uploaded_albums(uploaded_songs)
 
 sys.exit(1)
 
