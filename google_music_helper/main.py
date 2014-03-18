@@ -4,7 +4,7 @@ import sys
 
 import replacer
 from google_music_helper.json_utils import save_json_to_file
-from google_music_helper import authentication, locations
+from google_music_helper import authentication, locations, choose_function
 
 
 def create_work_directories():
@@ -39,16 +39,38 @@ mobile_api = authentication.get_mobile_api()
 web_api = authentication.get_web_api()
 music_manager_api = authentication.get_music_manager_api()
 
-songs = mobile_api.get_all_songs()
-uploaded_songs = music_manager_api.get_uploaded_songs()
+# TODO: Refactor
+while True:
+    question = "\nPlease choose a function:" \
+               + "\n1. Find and replace uploaded albums with All Access versions" \
+               + "\n2. Add all tracks from existing artists in library" \
+               + "\n3. Write uploaded songs listing to file" \
+               + "\n4. Write all songs listing to file" \
+               + "\n5. Exit\n"
+    intended_function = choose_function.query_intended_function(question, range(1, 6))
 
-save_json_to_file(songs, locations.OUTPUT_DIRECTORY + 'all_songs.json')
-save_json_to_file(uploaded_songs, locations.OUTPUT_DIRECTORY + 'all_uploaded_songs.json')
+    if intended_function == 1:
+        replacer.init()
+        replacer.find_and_replace_uploaded_albums()
+    elif intended_function == 2:
+        sys.stdout.write("Not yet implemented!\n")
+    elif intended_function == 3:
+        uploaded_songs = music_manager_api.get_uploaded_songs()
 
-replacer.init()
-replacer.find_and_replace_uploaded_albums(uploaded_songs)
+        output_location = locations.OUTPUT_DIRECTORY + 'all_uploaded_songs.json'
+        save_json_to_file(uploaded_songs, output_location)
 
-sys.exit(1)
+        sys.stdout.write("Wrote all uploaded songs (JSON) to %s\n" % output_location)
+    elif intended_function == 4:
+        songs = mobile_api.get_all_songs()
+
+        output_location = locations.OUTPUT_DIRECTORY + 'all_songs.json'
+        save_json_to_file(songs, output_location)
+
+        sys.stdout.write("Wrote all songs (JSON) to %s\n" % output_location)
+    elif intended_function == 5:
+        sys.stdout.write("Exiting!\n")
+        sys.exit(1)
 
 # def add_all_tracks_from_artists():
 #     global artist, artistId, artist_info, album, albumName, albumId, album_info, track, trackName, trackId

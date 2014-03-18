@@ -8,20 +8,23 @@ logger = logging.getLogger('google_music_helper')
 
 mobile_api = None
 web_api = None
+music_manager_api = None
 
 
 def init():
-    global mobile_api, web_api
+    global mobile_api, web_api, music_manager_api
 
     mobile_api = authentication.get_mobile_api()
     web_api = authentication.get_web_api()
+    music_manager_api = authentication.get_music_manager_api()
 
 
 if __name__ == "__init__":
     init()
 
 
-def find_and_replace_uploaded_albums(uploaded_songs):
+def find_and_replace_uploaded_albums():
+    uploaded_songs = music_manager_api.get_uploaded_songs()
     uploaded_albums = helper.get_uploaded_albums(uploaded_songs)
 
     for (album, artist) in uploaded_albums:
