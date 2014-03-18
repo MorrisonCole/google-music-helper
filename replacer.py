@@ -32,11 +32,15 @@ def find_and_replace_uploaded_albums(uploaded_songs):
         album_hits = search_results.get('album_hits', [''])
 
         if album_hits:
+            print "All Access entry found!"
+
             # Take the first result, since they are sorted by confidence.
             album_hit = album_hits[0]
 
             album_name = album_hit['album']['name']
             album_id = album_hit['album']['albumId']
+
+            print_album_info(album_id)
 
             question = "Replace with All Access version? (Your original uploaded tracks will be deleted)"
             replace = yes_no.query_yes_no(question, default="yes")
@@ -45,7 +49,7 @@ def find_and_replace_uploaded_albums(uploaded_songs):
                 print "Replacing with All Access entry:", album_name.decode('utf-8')
                 replace_uploaded_album((album, artist), album_id)
         else:
-            print "  Could not find All Access entry"
+            print "Could not find All Access entry"
 
 
 def replace_uploaded_album((album, artist), album_id, uploaded_songs):
@@ -66,3 +70,20 @@ def add_tracks_from_album(album_id):
 
         print "Adding track:", track_name.decode('utf-8')
         mobile_api.add_aa_track(track_id)
+
+
+def print_album_info(album_id):
+    album_info = mobile_api.get_album_info(album_id, include_tracks=True)
+
+    album_name = album_info['name']
+    album_artist = album_info['artist']
+
+    print "All Access Album Info:"
+    print "  Name:", album_name.decode('utf-8')
+    print "  Artist:", album_artist.decode('utf-8')
+
+    for track in album_info['tracks']:
+        track_number = track['trackNumber']
+        track_name = track['title']
+
+        print "    Track %r: %s" % (track_number, track_name.decode('utf-8'))
